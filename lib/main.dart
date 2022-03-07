@@ -45,16 +45,7 @@ class _MyAppState extends State<MyApp> {
           margin: const EdgeInsets.all(8),
           child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Masukkan Suhu Dalam Celcius',
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                controller: etInputUser,
-                keyboardType: TextInputType.number,
-              ),
+              Input(etInputUser: etInputUser),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -69,44 +60,85 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 150),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text('Suhu dalam Kelvin'),
-                            Text(
-                              '$_kelvin',
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text('Suhu dalam Reamur'),
-                            Text(
-                              '$_reamur',
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ]),
-              ),
+              Result(kelvin: _kelvin, reamur: _reamur),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class Result extends StatelessWidget {
+  const Result({
+    Key? key,
+    required double kelvin,
+    required double reamur,
+  })  : _kelvin = kelvin,
+        _reamur = reamur,
+        super(key: key);
+
+  final double _kelvin;
+  final double _reamur;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 150),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                children: [
+                  const Text('Suhu dalam Kelvin'),
+                  Text(
+                    '$_kelvin',
+                    style: const TextStyle(
+                      fontSize: 30,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  const Text('Suhu dalam Reamur'),
+                  Text(
+                    '$_reamur',
+                    style: const TextStyle(
+                      fontSize: 30,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ]),
+    );
+  }
+}
+
+class Input extends StatelessWidget {
+  const Input({
+    Key? key,
+    required this.etInputUser,
+  }) : super(key: key);
+
+  final TextEditingController etInputUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: const InputDecoration(
+        hintText: 'Masukkan Suhu Dalam Celcius',
+      ),
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
+      controller: etInputUser,
+      keyboardType: TextInputType.number,
     );
   }
 }
