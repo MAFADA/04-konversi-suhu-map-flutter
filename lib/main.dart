@@ -19,19 +19,17 @@ class _MyAppState extends State<MyApp> {
   double _kelvin = 0;
   double _reamur = 0;
 
-  TextEditingController etInputUser = TextEditingController();
-
-  void _konversiSuhu() {
-    setState(() {
-      _inputUser = double.parse(etInputUser.text);
-      _reamur = (4 / 5) * _inputUser;
-      _kelvin = _inputUser + 273.0;
-    });
-  }
+  final etInputUser = TextEditingController();
 
   @override
+  void dispose() {
+    etInputUser.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Konversi Suhu',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
@@ -39,19 +37,23 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Converter Suhu"),
+          title: const Text("2031710168, M. Afada Nur Saiva Syahira"),
         ),
         body: Container(
           margin: const EdgeInsets.all(8),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Input(etInputUser: etInputUser),
+              Result(kelvin: _kelvin, reamur: _reamur),
               Container(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: _konversiSuhu,
-                  child: Text(
+                  onPressed: () {
+                    _konversiSuhu();
+                  },
+                  child: const Text(
                     "Konversi Suhu",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -60,12 +62,19 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              Result(kelvin: _kelvin, reamur: _reamur),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _konversiSuhu() {
+    _inputUser = double.parse(etInputUser.text);
+    setState(() {
+      _reamur = (4 / 5) * _inputUser;
+      _kelvin = _inputUser + 273;
+    });
   }
 }
 
@@ -85,37 +94,34 @@ class Result extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 150),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                children: [
-                  const Text('Suhu dalam Kelvin'),
-                  Text(
-                    '$_kelvin',
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  const Text('Suhu dalam Reamur'),
-                  Text(
-                    '$_reamur',
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
-                  )
-                ],
-              ),
-            )
-          ]),
+      child: Row(children: <Widget>[
+        Expanded(
+          child: Column(
+            children: [
+              const Text('Suhu dalam Kelvin'),
+              Text(
+                '$_kelvin',
+                style: const TextStyle(
+                  fontSize: 30,
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              const Text('Suhu dalam Reamur'),
+              Text(
+                _reamur.toStringAsFixed(0),
+                style: const TextStyle(
+                  fontSize: 30,
+                ),
+              )
+            ],
+          ),
+        )
+      ]),
     );
   }
 }
