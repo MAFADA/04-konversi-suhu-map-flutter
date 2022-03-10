@@ -16,8 +16,8 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   //var berubah
   double _inputUser = 0;
-  double _kelvin = 0;
-  double _reamur = 0;
+  // double _kelvin = 0;
+  // double _reamur = 0;
   var listItem = ["Kelvin", "Reamur"];
   String _newValue = "Kelvin";
   double _result = 0;
@@ -103,20 +103,12 @@ class _MyAppState extends State<MyApp> {
   void _konversiSuhu() {
     setState(() {
       _inputUser = double.parse(etInputUser.text);
-      switch (_newValue) {
-        case "Kelvin":
-          {
-            _result = _inputUser + 273;
-            listViewItem.add("Kelvin : " "$_result");
-          }
-          break;
-
-        case "Reamur":
-          {
-            _result = (4 / 5) * _inputUser;
-            listViewItem.add("Reamur : " "$_result");
-          }
-          break;
+      if (_newValue == "Kelvin") {
+        _result = _inputUser + 273;
+        listViewItem.add("Kelvin : " "$_result");
+      } else {
+        _result = (4 / 5) * _inputUser;
+        listViewItem.add("Reamur : " "$_result");
       }
     });
   }
@@ -153,7 +145,8 @@ class Result extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 150),
+      // margin: const EdgeInsets.symmetric(vertical: 150),
+      margin: EdgeInsets.only(bottom: 150, top: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
