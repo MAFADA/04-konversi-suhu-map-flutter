@@ -14,4 +14,4 @@ A new Flutter project
 ![Screenshot Hasil Praktikum](screenshot/TugasMg3.png)
 
 ## Tugas4
-![Screenshot Hasil Tugas4](screenshot/tugas4.png.png)
+![Screenshot Hasil Tugas4](screenshot/tugas4.png)
