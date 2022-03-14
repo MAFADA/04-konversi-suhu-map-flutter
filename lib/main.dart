@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:konversi_suhu/widgets/convert.dart';
+import 'package:konversi_suhu/widgets/input.dart';
+import 'package:konversi_suhu/widgets/result.dart';
+import 'package:konversi_suhu/widgets/riwayat_konversi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   // double _kelvin = 0;
   // double _reamur = 0;
   var listItem = ["Kelvin", "Reamur"];
-  String _newValue = "Kelvin";
+  String newValue = "Kelvin";
   double _result = 0;
   List<String> listViewItem = <String>[];
 
@@ -46,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           margin: const EdgeInsets.all(8),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Input(etInputUser: etInputUser),
               DropdownButton<String>(
@@ -56,35 +59,19 @@ class _MyAppState extends State<MyApp> {
                     child: Text(value),
                   );
                 }).toList(),
-                value: _newValue,
-                onChanged: (String? changeValue) {
+                value: newValue,
+                onChanged: (value) {
                   setState(() {
-                    _newValue = changeValue!;
-                    _konversiSuhu();
+                    newValue = value!;
                   });
+                  konversiSuhu();
                 },
+                isExpanded: true,
               ),
               Result(
                 result: _result,
               ),
-              SizedBox(
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _konversiSuhu();
-                    },
-                    child: const Text(
-                      "Konversi Suhu",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
-                    ),
-                  ),
-                ),
-              ),
+              Convert(konversiSuhu: konversiSuhu),
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 10),
                 child: Text(
@@ -100,89 +87,102 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _konversiSuhu() {
+  konversiSuhu() {
     setState(() {
-      _inputUser = double.parse(etInputUser.text);
-      if (_newValue == "Kelvin") {
-        _result = _inputUser + 273;
-        listViewItem.add("Kelvin : " "$_result");
-      } else {
-        _result = (4 / 5) * _inputUser;
-        listViewItem.add("Reamur : " "$_result");
+      if (etInputUser.text.isNotEmpty) {
+        _inputUser = double.parse(etInputUser.text);
+
+        switch (newValue) {
+          case "Kelvin":
+            {
+              _result = _inputUser + 273;
+              listViewItem
+                  .add("Celcius: " "$_inputUser" "--> Kelvin : " "$_result");
+            }
+            break;
+
+          case "Reamur":
+            {
+              _result = (4 / 5) * _inputUser;
+              listViewItem
+                  .add("Celcius: " "$_inputUser" "--> Reamur : " "$_result");
+            }
+            break;
+        }
       }
     });
   }
 }
 
-class RiwayatKonversi extends StatelessWidget {
-  const RiwayatKonversi({
-    Key? key,
-    required this.listViewItem,
-  }) : super(key: key);
+// class RiwayatKonversi extends StatelessWidget {
+//   const RiwayatKonversi({
+//     Key? key,
+//     required this.listViewItem,
+//   }) : super(key: key);
 
-  final List<String> listViewItem;
+//   final List<String> listViewItem;
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: listViewItem.length,
-        itemBuilder: ((context, index) {
-          return Container(
-            child: Text(listViewItem[index]),
-          );
-        }));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//         itemCount: listViewItem.length,
+//         itemBuilder: ((context, index) {
+//           return Container(
+//             child: Text(listViewItem[index]),
+//           );
+//         }));
+//   }
+// }
 
-class Result extends StatelessWidget {
-  const Result({
-    Key? key,
-    required this.result,
-  }) : super(key: key);
+// class Result extends StatelessWidget {
+//   const Result({
+//     Key? key,
+//     required this.result,
+//   }) : super(key: key);
 
-  final double result;
+//   final double result;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // margin: const EdgeInsets.symmetric(vertical: 150),
-      margin: EdgeInsets.only(bottom: 150, top: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Hasil",
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            result.toStringAsFixed(1),
-            style: TextStyle(fontSize: 30),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       // margin: const EdgeInsets.symmetric(vertical: 150),
+//       margin: EdgeInsets.only(bottom: 150, top: 50),
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Text(
+//             "Hasil",
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           Text(
+//             result.toStringAsFixed(1),
+//             style: TextStyle(fontSize: 30),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-class Input extends StatelessWidget {
-  const Input({
-    Key? key,
-    required this.etInputUser,
-  }) : super(key: key);
+// class Input extends StatelessWidget {
+//   const Input({
+//     Key? key,
+//     required this.etInputUser,
+//   }) : super(key: key);
 
-  final TextEditingController etInputUser;
+//   final TextEditingController etInputUser;
 
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Masukkan Suhu Dalam Celcius',
-      ),
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.digitsOnly
-      ],
-      controller: etInputUser,
-      keyboardType: TextInputType.number,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       decoration: const InputDecoration(
+//         hintText: 'Masukkan Suhu Dalam Celcius',
+//       ),
+//       inputFormatters: <TextInputFormatter>[
+//         FilteringTextInputFormatter.digitsOnly
+//       ],
+//       controller: etInputUser,
+//       keyboardType: TextInputType.number,
+//     );
+//   }
+// }
