@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   double _inputUser = 0;
   // double _kelvin = 0;
   // double _reamur = 0;
-  var listItem = ["Kelvin", "Reamur"];
+  var listItem = ["Kelvin", "Reamur", "Fahrenheit"];
   String newValue = "Kelvin";
   double _result = 0;
   List<String> listViewItem = <String>[];
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Input(etInputUser: etInputUser),              
+              Input(etInputUser: etInputUser),
               DropdownMenu(
                 selectedDropdown: newValue,
                 listSatuanSuhu: listItem,
@@ -96,6 +96,13 @@ class _MyAppState extends State<MyApp> {
               _result = (4 / 5) * _inputUser;
               listViewItem
                   .add("Celcius: " "$_inputUser" "--> Reamur : " "$_result");
+            }
+            break;
+          case "Fahrenheit":
+            {
+              _result = ((9 / 5) * _inputUser) + 32;
+              listViewItem.add(
+                  "Celcius: " "$_inputUser" "--> Fahrenheit : " "$_result");
             }
             break;
         }
