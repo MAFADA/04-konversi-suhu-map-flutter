@@ -1,20 +1,45 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+
+class DropdownMenu extends StatelessWidget {
+  const DropdownMenu({
+    Key? key,
+    required this.selectedDropdown,
+    required this.listSatuanSuhu,
+    required this.onChangedDropdown,
+  }) : super(key: key);
+
+  final String selectedDropdown;
+  final List<String> listSatuanSuhu;
+  final Function onChangedDropdown;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      items: listSatuanSuhu.map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (value) {
+        onChangedDropdown(value);
+      },
+      isExpanded: true,
+    );
+  }
+}
 
 // class Dropdown extends StatelessWidget {
 //   const Dropdown({
 //     Key? key,
-//     required this.newValue,
 //     required this.listViewItem,
-//     required this.onChangedDropdown,
 //     required this.konversiSuhu,
 //     required this.listItem,
 //   }) : super(key: key);
 
 //   final listItem;
 //   final VoidCallback konversiSuhu;
-//   final String newValue;
 //   final List<String> listViewItem;
-//   final Function onChangedDropdown;
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -26,12 +51,13 @@
 //         );
 //       }).toList(),
 //       value: newValue,
-//       onChanged: (String? changeValue) {
+//       onChanged: (value) {
 //         setState(() {
-//           newValue = changeValue!;
-//           konversiSuhu();
+//           newValue = value!;
 //         });
+//         konversiSuhu();
 //       },
+//       isExpanded: true,
 //     );
 //   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konversi_suhu/widgets/convert.dart';
+import 'package:konversi_suhu/widgets/dropdown.dart';
 import 'package:konversi_suhu/widgets/input.dart';
 import 'package:konversi_suhu/widgets/result.dart';
 import 'package:konversi_suhu/widgets/riwayat_konversi.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  //var berubah
+  //
   double _inputUser = 0;
   // double _kelvin = 0;
   // double _reamur = 0;
@@ -52,21 +53,26 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Input(etInputUser: etInputUser),
-              DropdownButton<String>(
-                items: listItem.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                value: newValue,
-                onChanged: (value) {
-                  setState(() {
-                    newValue = value!;
-                  });
-                  konversiSuhu();
-                },
-                isExpanded: true,
+              // DropdownButton<String>(
+              //   items: listItem.map((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(value),
+              //     );
+              //   }).toList(),
+              //   value: newValue,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       newValue = value!;
+              //     });
+              //     konversiSuhu();
+              //   },
+              //   isExpanded: true,
+              // ),
+              DropdownMenu(
+                selectedDropdown: newValue,
+                listSatuanSuhu: listItem,
+                onChangedDropdown: onChangedDropdown,
               ),
               Result(
                 result: _result,
@@ -110,6 +116,13 @@ class _MyAppState extends State<MyApp> {
             break;
         }
       }
+    });
+  }
+
+  onChangedDropdown(String value) {
+    setState(() {
+      newValue = value;
+      konversiSuhu();
     });
   }
 }
