@@ -52,23 +52,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Input(etInputUser: etInputUser),
-              // DropdownButton<String>(
-              //   items: listItem.map((String value) {
-              //     return DropdownMenuItem<String>(
-              //       value: value,
-              //       child: Text(value),
-              //     );
-              //   }).toList(),
-              //   value: newValue,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       newValue = value!;
-              //     });
-              //     konversiSuhu();
-              //   },
-              //   isExpanded: true,
-              // ),
+              Input(etInputUser: etInputUser),              
               DropdownMenu(
                 selectedDropdown: newValue,
                 listSatuanSuhu: listItem,
