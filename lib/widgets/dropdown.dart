@@ -21,10 +21,11 @@ class DropdownMenu extends StatelessWidget {
           child: Text(value),
         );
       }).toList(),
+      value: selectedDropdown,
       onChanged: (value) {
         onChangedDropdown(value);
       },
-      isExpanded: true,
+      isExpanded: false,
     );
   }
 }
